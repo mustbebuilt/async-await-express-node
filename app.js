@@ -21,13 +21,9 @@ app.use((req, res, next) => {
 
 app.use('/', routes(app))
 
-// remove for sample files
-app.use((req, res, next) => {
-    res.status(404).send("Sorry can't find that!");
-    next();
-})
-
-
+    app.use((req, res, next) => {
+      res.status(404).send("Sorry can't find that!");
+    });
 
 // Database
 

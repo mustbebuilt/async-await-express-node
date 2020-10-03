@@ -9,25 +9,33 @@ const myControllers = require('../controllers/controllers.js');
 
 module.exports = (app) => {
 
-    router.get('/main', (req, res) => {
-        return res.render('main', {
-            title: 'EJS Example from Parts', 
-            message: 'Hello Template built in parts two',
-            showMsg: true,
-            headingOne: 'Page made from parts'
-            });
+    router.get("/allfilms", async (req, res, next) => {
+      try {
+        const allFilms = await myControllers.viewAll(app, req, res);
+        res.render("allFilms", {
+          title: "All Films",
+          films: allFilms,
+        });
+      } catch (e) {
+        //this will eventually be handled by your error handling middleware
+        next(e);
+      }
     });
 
-    router.get('/allfilms', (req, res) => {
-        console.info("All Films Called")
-        myControllers.viewAll(app, req, res);
-    })
 
+        router.get("/film/:filmID", async (req, res, next) => {
+           try {
+            const oneFilm = await myControllers.viewItem(app, req, res);
+            res.render("oneFilm", {
+              title: "All Films",
+              film: oneFilm,
+            });
+          } catch (e) {
+            //this will eventually be handled by your error handling middleware
+            next(e);
+          }
+        });
 
-
-
-
-    
 
   
     return router;
